@@ -14,6 +14,9 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Business Roadmap with Milestones",
   "mark": "point",
+  "data": {
+    "name": "roadmap"
+  },
   "encoding": {
     "x": {
       "field": "date",
