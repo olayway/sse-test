@@ -6,25 +6,6 @@
   "description": "a serpentine timeline. The serpentine shape can be an option for instances where an oblong canvas is not ideal. The shape can be customized using many of the signals below. Input bindings have been included for demonstration purposes",
   "padding": 15,
   "width": 300,
-  "scales": [
-    {
-      "name": "sS1",
-      "type": "linear",
-      "zero": false,
-      "reverse": { "signal": "reverse" },
-      "domain": { "signal": "sDomain" },
-      "range": { "signal": "sRange" }
-    },
-    {
-      "name": "footerY",
-      "type": "band",
-      "domain": { "data": "footer", "field": "id" },
-      "range": [
-        { "signal": "height+60" },
-        { "signal": "height+60+length(data('footer'))*11" }
-      ]
-    }
-  ],
   "marks": [
     {
       "name": "axis_group",
