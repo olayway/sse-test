@@ -1,37 +1,33 @@
 # Our Roadmap
 
-<VegaLite
+<Vega
   data={{
-    "values": [
-      {"milestone": "Project Kickoff", "date": "2024-01-01"},
-      {"milestone": "Phase 1 Complete", "date": "2024-03-01"},
-      {"milestone": "Phase 2 Complete", "date": "2024-06-01"},
-      {"milestone": "Beta Release", "date": "2024-09-01"},
-      {"milestone": "Final Release", "date": "2025-01-01"}
+    table: [
+      {
+        x: 1850,
+        y: -0.418
+      },
+      {
+        x: 2020,
+        y: 0.923
+      }
     ]
   }}
   spec={{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Business Roadmap with Milestones",
-  "mark": "point",
-  "data": {
-    "name": "roadmap"
-  },
-  "encoding": {
-    "x": {
-      "field": "date",
-      "type": "temporal",
-      "axis": {"title": "Date"}
+    $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
+    data: {
+      name: 'table'
     },
-    "y": {
-      "field": "milestone",
-      "type": "nominal",
-      "axis": {"title": "Milestone"}
+    encoding: {
+      x: {
+        field: 'x',
+        type: 'ordinal'
+      },
+      y: {
+        field: 'y',
+        type: 'quantitative'
+      }
     },
-    "tooltip": [
-      {"field": "milestone", "type": "nominal"},
-      {"field": "date", "type": "temporal", "title": "Date"}
-    ]
-  }
-}}
+    mark: 'bar'
+  }}
 />
