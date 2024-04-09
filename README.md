@@ -6,6 +6,153 @@
   "description": "a serpentine timeline. The serpentine shape can be an option for instances where an oblong canvas is not ideal. The shape can be customized using many of the signals below. Input bindings have been included for demonstration purposes",
   "padding": 15,
   "width": 300,
+  "signals": [
+    {
+      "name": "width",
+      "init": "width"
+    },
+    {
+      "name": "sH",
+      "description": "serpentine: diameter of arcs",
+      "value": 125
+    },
+    {
+      "name": "labelsOnHover",
+      "description": "milestone: show labels on hover only",
+      "value": false
+    },
+    {
+      "name": "sN",
+      "description": "serpentine: number of arcs",
+      "value": 2.2
+    },
+    {
+      "name": "tC",
+      "description": "ticks: number of axis ticks to display on the timeline",
+      "value": 21
+    },
+    {
+      "name": "tLO",
+      "description": "ticks: the offset for the tick labels",
+      "value": 8
+    },
+    {
+      "name": "mO",
+      "description": "milestone: the offset for the milestone markers",
+      "value": 35
+    },
+    {
+      "name": "sR0P",
+      "description": "serpentine: percentage of width of canvas for the start of the timeline",
+      "value": 0
+    },
+    {
+      "name": "sLP",
+      "description": "serpentine: percentage of total length of canvas for the end of the timeline",
+      "value": 1
+    },
+    {
+      "name": "annotationStart",
+      "value": ""
+    },
+    {
+      "name": "annotationEnd",
+      "value": "Today"
+    },
+    {
+      "name": "includeArrows",
+      "value": true
+    },
+    {
+      "name": "sT",
+      "description": "serpentine: thicknes of the line",
+      "value": 5
+    },
+    {
+      "name": "domain",
+      "init": "[year(now())-100, year(now())]",
+      "description": "serpentine: manually set the domain extent for the timeline, otherwise set to null to have the domain calculated for you"
+    },
+    {
+      "name": "sRange",
+      "description": "serpentine: range for the serpentine scale",
+      "update": "[sR0P*width,sL*sLP]"
+    },
+    {
+      "name": "annotations",
+      "description": "serpentine: annotations that appear at the start and end of the timeline",
+      "update": "{start: (isValid(annotationStart) ? annotationStart : ''), end: (isValid(annotationEnd) ? annotationEnd : '')}"
+    },
+    {
+      "name": "sD",
+      "update": "[2, 2]",
+      "description": "serpentine: dash array for the serpentine line"
+    },
+    {
+      "name": "reverse",
+      "description": "serpentine: boolean to indicate whether the scale for the timeline should be reversed",
+      "value": false
+    },
+    {
+      "name": "sPct",
+      "description": "serpentine: percentage of width for the straight portions of the timeline",
+      "value": 1,
+      "update": "sPct < 0.25 ? 0 : sPct < 0.75 ? 0.5 : 1"
+    },
+    {
+      "name": "sW",
+      "description": "serpentine: horizontal length of straight segments",
+      "update": "sPct*width"
+    },
+    {
+      "name": "sL",
+      "description": "serpentine: total length of line",
+      "update": "(sN+1)*sW+(sN)*sH*PI/2"
+    },
+    {
+      "name": "sA",
+      "description": "serpentine: length of an arc segment",
+      "update": "(sH*PI/2)"
+    },
+    {
+      "name": "sWsA",
+      "description": "serpentine: length of a line + arc segment",
+      "update": "(sW + sH*PI/2)"
+    },
+    {
+      "name": "sDomain",
+      "description": "serpentine: domain for the serpentine scale",
+      "init": "domain ? domain : [+extent(pluck(data('dataset'), 'domain'))[0], +extent(pluck(data('dataset'), 'domain'))[1]]"
+    },
+    {
+      "name": "hoverFocus",
+      "value": 0
+    },
+    {
+      "name": "height",
+      "description": "calculated height",
+      "update": "extent(pluck(data('serpentine'), 'y'))[1]"
+    }
+  ],
+  "scales": [
+    {
+      "name": "sS1",
+      "type": "linear",
+      "zero": false,
+      "reverse": { "signal": "reverse" },
+      "domain": { "signal": "sDomain" },
+      "range": { "signal": "sRange" }
+    },
+    {
+      "name": "footerY",
+      "type": "band",
+      "domain": { "data": "footer", "field": "id" },
+      "range": [
+        { "signal": "height+60" },
+        { "signal": "height+60+length(data('footer'))*11" }
+      ]
+    }
+  ],
   "marks": [
     {
       "name": "axis_group",
@@ -16,7 +163,6 @@
           "name": "annotations",
           "description": "Text marks that appear at the start and end of the timeline. Configured using the 'annotations' signal",
           "from": { "data": "domain_extent" },
-          "on": [{ "trigger": "annotations", "modify": "annotations" }],
           "type": "text",
           "interactive": false,
           "encode": {
@@ -153,7 +299,7 @@
       "description": "The milestone timeline markers",
       "from": { "data": "milestones" },
       "type": "symbol",
-      "interactive": true,
+      "interactive": false,
       "encode": {
         "update": {
           "x": { "field": "x" },
