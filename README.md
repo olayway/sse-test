@@ -1,6 +1,6 @@
 # Our Roadmap
 
-<Vega
+<VegaLite
   spec={{
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "a serpentine timeline. The serpentine shape can be an option for instances where an oblong canvas is not ideal. The shape can be customized using many of the signals below. Input bindings have been included for demonstration purposes",
