@@ -2,9 +2,6 @@
 
 <VegaLite
   data={{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Business Roadmap with Milestones",
-  "data": {
     "values": [
       {"milestone": "Project Kickoff", "date": "2024-01-01"},
       {"milestone": "Phase 1 Complete", "date": "2024-03-01"},
@@ -12,7 +9,10 @@
       {"milestone": "Beta Release", "date": "2024-09-01"},
       {"milestone": "Final Release", "date": "2025-01-01"}
     ]
-  },
+  }}
+  spec={{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Business Roadmap with Milestones",
   "mark": "point",
   "encoding": {
     "x": {
